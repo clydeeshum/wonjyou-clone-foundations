@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import LoadingScreen from "@/components/LoadingScreen";
 import ParticleOverlay from "@/components/ParticleOverlay";
+import ParallaxLettersSection from "@/components/ParallaxLettersSection";
 import HeroSection from "@/components/HeroSection";
 import FoldTextSection from "@/components/FoldTextSection";
 import HorizontalScrollSection from "@/components/HorizontalScrollSection";
@@ -19,6 +20,7 @@ const Index = () => {
         <ProgressBar />
         <ParticleOverlay />
         <Navigation />
+        <ParallaxLettersSection />
         <HeroSection />
         <FoldTextSection />
         <HorizontalScrollSection />
