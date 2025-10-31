@@ -10,23 +10,54 @@ const ParallaxLettersSection = () => {
   useEffect(() => {
     const letters = gsap.utils.toArray('.parallax-letter');
     
-    letters.forEach((letter: any) => {
-      const speed = parseFloat(letter.getAttribute('data-speed'));
+    // Initial falling animation
+    letters.forEach((letter: any, index: number) => {
+      const randomX = gsap.utils.random(-200, 200);
+      const randomRotation = gsap.utils.random(-45, 45);
+      const randomDelay = gsap.utils.random(0, 0.8);
       
-      gsap.to(letter, {
-        y: (i, target) => {
-          const offset = ScrollTrigger.maxScroll(window) * (1 - speed) * 0.3;
-          return offset;
+      gsap.fromTo(letter,
+        {
+          y: -1000,
+          x: randomX,
+          rotation: randomRotation,
+          opacity: 0,
+          scale: 0.5
         },
-        ease: "none",
-        scrollTrigger: {
-          start: 0,
-          end: "max",
-          scrub: 1,
-          invalidateOnRefresh: true
+        {
+          y: 0,
+          x: 0,
+          rotation: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.5,
+          delay: randomDelay,
+          ease: "bounce.out"
         }
-      });
+      );
     });
+
+    // Enhanced scroll parallax animation
+    setTimeout(() => {
+      letters.forEach((letter: any) => {
+        const speed = parseFloat(letter.getAttribute('data-speed'));
+        
+        gsap.to(letter, {
+          y: (i, target) => {
+            // Increased multiplier from 0.3 to 0.8 for more visible movement
+            const offset = ScrollTrigger.maxScroll(window) * (1 - speed) * 0.8;
+            return offset;
+          },
+          ease: "none",
+          scrollTrigger: {
+            start: 0,
+            end: "max",
+            scrub: 0.5,
+            invalidateOnRefresh: true
+          }
+        });
+      });
+    }, 1500);
 
     return () => {
       ScrollTrigger.getAll().forEach(st => st.kill());
