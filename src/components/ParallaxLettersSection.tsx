@@ -10,19 +10,20 @@ const ParallaxLettersSection = () => {
   useEffect(() => {
     const letters = gsap.utils.toArray('.parallax-letter');
     
-    // Initial falling animation
+    // Initial falling animation - slower and sequential
     letters.forEach((letter: any, index: number) => {
-      const randomX = gsap.utils.random(-200, 200);
-      const randomRotation = gsap.utils.random(-45, 45);
-      const randomDelay = gsap.utils.random(0, 0.8);
+      const randomX = gsap.utils.random(-300, 300);
+      const randomRotation = gsap.utils.random(-90, 90);
+      // Sequential delay - each letter waits for previous
+      const sequentialDelay = index * 0.15;
       
       gsap.fromTo(letter,
         {
-          y: -1000,
+          y: -1500,
           x: randomX,
           rotation: randomRotation,
           opacity: 0,
-          scale: 0.5
+          scale: 0.3
         },
         {
           y: 0,
@@ -30,34 +31,41 @@ const ParallaxLettersSection = () => {
           rotation: 0,
           opacity: 1,
           scale: 1,
-          duration: 1.5,
-          delay: randomDelay,
-          ease: "bounce.out"
+          duration: 2.5,
+          delay: sequentialDelay,
+          ease: "elastic.out(1, 0.6)"
         }
       );
     });
 
-    // Enhanced scroll parallax animation
+    // Enhanced scroll parallax animation with full reversibility
+    const totalDuration = letters.length * 0.15 + 2.5;
     setTimeout(() => {
       letters.forEach((letter: any) => {
         const speed = parseFloat(letter.getAttribute('data-speed'));
         
-        gsap.to(letter, {
-          y: (i, target) => {
-            // Increased multiplier from 0.3 to 0.8 for more visible movement
-            const offset = ScrollTrigger.maxScroll(window) * (1 - speed) * 0.8;
-            return offset;
+        gsap.fromTo(letter,
+          {
+            y: 0
           },
-          ease: "none",
-          scrollTrigger: {
-            start: 0,
-            end: "max",
-            scrub: 0.5,
-            invalidateOnRefresh: true
+          {
+            y: (i, target) => {
+              // Increased multiplier for more visible movement
+              const offset = ScrollTrigger.maxScroll(window) * (1 - speed) * 0.8;
+              return offset;
+            },
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.5,
+              invalidateOnRefresh: true
+            }
           }
-        });
+        );
       });
-    }, 1500);
+    }, totalDuration * 1000);
 
     return () => {
       ScrollTrigger.getAll().forEach(st => st.kill());
