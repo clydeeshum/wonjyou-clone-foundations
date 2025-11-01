@@ -2,12 +2,10 @@ import Navigation from "@/components/Navigation";
 import ParticleOverlay from "@/components/ParticleOverlay";
 import ProgressBar from "@/components/ProgressBar";
 import GalleryCarousel from "@/components/GalleryCarousel";
-import ScaleSection from "@/components/ScaleSection";
-import RotateSection from "@/components/RotateSection";
 
 const Works = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <ProgressBar />
       <ParticleOverlay />
       <Navigation />
@@ -25,21 +23,21 @@ const Works = () => {
           </div>
         </section>
 
-        {/* Gallery Carousel Section - Scroll Controlled */}
+        {/* Gallery Carousel Section */}
         <GalleryCarousel />
 
-        {/* Section 2: Scale Animation */}
-        <ScaleSection 
-          title="FEATURED WORKS" 
-          description="Each project is crafted with precision, passion, and purpose. Discover the stories behind the visuals."
-          bgColor="bg-muted/5"
-        />
-
-        {/* Section 3: Rotate Animation */}
-        <RotateSection 
-          title="CREATIVE VISION" 
-          subtitle="Transforming ideas into immersive experiences through innovative design and technology."
-        />
+        {/* Footer Info */}
+        <section className="min-h-screen flex items-center justify-center">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6">
+              More Coming Soon
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              This is just the beginning. Stay tuned for more innovative projects
+              and creative explorations.
+            </p>
+          </div>
+        </section>
       </div>
     </div>
   );

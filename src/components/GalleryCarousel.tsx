@@ -222,39 +222,13 @@ const GalleryCarousel = () => {
 
     activeAnimationsRef.current.push(timeline);
 
-    // Setup scroll-triggered pattern transitions
-    const patterns = ["circle", "wave", "grid", "fan", "depth"];
-    const section = carouselRef.current?.parentElement;
-    
-    if (section) {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "bottom bottom",
-        pin: carouselRef.current,
-        pinSpacing: true,
-        scrub: 0.5,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          // Divide the scroll into equal segments for each pattern
-          const patternIndex = Math.min(Math.floor(progress * patterns.length), patterns.length - 1);
-          const targetPattern = patterns[patternIndex];
-          
-          if (targetPattern !== currentMode && !isTransitioning) {
-            transitionToMode(targetPattern);
-          }
-        }
-      });
-    }
-
     return () => {
       killActiveAnimations();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
   return (
-    <section className="relative h-[500vh] overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div ref={carouselRef} className="fixed inset-0 flex items-center justify-center" style={{ perspective: "2500px" }}>
         <div ref={itemsRef} className="absolute" style={{ transformStyle: "preserve-3d" }}>
           {images.map((img, i) => (
@@ -280,19 +254,26 @@ const GalleryCarousel = () => {
       </div>
 
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-5 bg-card/80 backdrop-blur-sm px-6 py-3 rounded-lg z-50 border border-border">
-        <div className="text-sm font-bold text-muted-foreground">
-          SCROLL TO EXPLORE
-        </div>
-        <div className="flex gap-2">
-          {["CIRCLE", "WAVE", "GRID", "FAN", "3D DEPTH"].map((label, index) => (
-            <div
-              key={label}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                currentMode === label.toLowerCase().replace(" ", "") ? "bg-primary" : "bg-muted-foreground/30"
-              }`}
-            />
-          ))}
-        </div>
+        {[
+          { label: "CIRCLE", mode: "circle" },
+          { label: "WAVE", mode: "wave" },
+          { label: "GRID", mode: "grid" },
+          { label: "FAN", mode: "fan" },
+          { label: "3D DEPTH", mode: "depth" }
+        ].map(({ label, mode }) => (
+          <button
+            key={mode}
+            onClick={() => transitionToMode(mode)}
+            className={`relative px-4 py-2 text-sm font-bold transition-colors ${
+              currentMode === mode ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {currentMode === mode && (
+              <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full" />
+            )}
+            {label}
+          </button>
+        ))}
       </div>
     </section>
   );
