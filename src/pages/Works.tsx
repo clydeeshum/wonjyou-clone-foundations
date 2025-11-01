@@ -25,19 +25,6 @@ const Works = () => {
 
         {/* Gallery Carousel Section */}
         <GalleryCarousel />
-
-        {/* Footer Info */}
-        <section className="min-h-screen flex items-center justify-center">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-5xl md:text-7xl font-bold mb-6">
-              More Coming Soon
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              This is just the beginning. Stay tuned for more innovative projects
-              and creative explorations.
-            </p>
-          </div>
-        </section>
       </div>
     </div>
   );

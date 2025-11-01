@@ -11,6 +11,8 @@ const GalleryCarousel = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const draggableRef = useRef<any>(null);
   const activeAnimationsRef = useRef<any[]>([]);
+  const currentModeIndexRef = useRef(0);
+  const patternSequence = ["circle", "wave", "grid", "fan", "depth"];
 
   const images = [
     "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe",
@@ -222,8 +224,25 @@ const GalleryCarousel = () => {
 
     activeAnimationsRef.current.push(timeline);
 
+    // Handle scroll to trigger pattern changes
+    let scrollTimeout: NodeJS.Timeout;
+    const handleWheel = (e: WheelEvent) => {
+      if (isTransitioning) return;
+      
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const nextIndex = (currentModeIndexRef.current + 1) % patternSequence.length;
+        currentModeIndexRef.current = nextIndex;
+        transitionToMode(patternSequence[nextIndex]);
+      }, 150);
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+
     return () => {
       killActiveAnimations();
+      window.removeEventListener("wheel", handleWheel);
+      clearTimeout(scrollTimeout);
     };
   }, []);
 
@@ -253,7 +272,7 @@ const GalleryCarousel = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-5 bg-card/80 backdrop-blur-sm px-6 py-3 rounded-lg z-50 border border-border">
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 bg-card/80 backdrop-blur-sm px-6 py-3 rounded-lg z-50 border border-border">
         {[
           { label: "CIRCLE", mode: "circle" },
           { label: "WAVE", mode: "wave" },
@@ -261,18 +280,17 @@ const GalleryCarousel = () => {
           { label: "FAN", mode: "fan" },
           { label: "3D DEPTH", mode: "depth" }
         ].map(({ label, mode }) => (
-          <button
+          <div
             key={mode}
-            onClick={() => transitionToMode(mode)}
-            className={`relative px-4 py-2 text-sm font-bold transition-colors ${
-              currentMode === mode ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+            className={`relative px-3 py-2 text-xs font-bold transition-colors ${
+              currentMode === mode ? "text-foreground" : "text-muted-foreground/50"
             }`}
           >
             {currentMode === mode && (
               <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full" />
             )}
             {label}
-          </button>
+          </div>
         ))}
       </div>
     </section>
