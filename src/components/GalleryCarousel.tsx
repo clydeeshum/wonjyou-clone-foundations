@@ -232,9 +232,11 @@ const GalleryCarousel = () => {
         start: "top top",
         end: "bottom bottom",
         pin: carouselRef.current,
-        scrub: 1,
+        pinSpacing: true,
+        scrub: 0.5,
         onUpdate: (self) => {
           const progress = self.progress;
+          // Divide the scroll into equal segments for each pattern
           const patternIndex = Math.min(Math.floor(progress * patterns.length), patterns.length - 1);
           const targetPattern = patterns[patternIndex];
           
