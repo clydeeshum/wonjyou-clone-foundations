@@ -61,9 +61,10 @@ const RotatingCubeText = () => {
           ease: "power1.inOut",
           duration: 2
         })
-        .fromTo(faces, {
+        .set(faces, {
           color: (j) => `hsl(${hue}, ${saturation}%, ${100 * rotations[(3 + j) % 4].brightness}%)`
-        }, {
+        }, 0)
+        .to(faces, {
           color: (j) => `hsl(${hue}, ${saturation}%, ${100 * rotations[j % 4].brightness}%)`
         }, 0)
         .to(faces, {
