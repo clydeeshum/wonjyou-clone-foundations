@@ -5,6 +5,8 @@ import RevealTextSection from "@/components/RevealTextSection";
 import RotateSection from "@/components/RotateSection";
 import ParallaxSection from "@/components/ParallaxSection";
 import ScaleSection from "@/components/ScaleSection";
+import RotatingCubeText from "@/components/RotatingCubeText";
+import WaveTextSection from "@/components/WaveTextSection";
 
 const Thoughts = () => {
   return (
@@ -24,7 +26,11 @@ const Thoughts = () => {
         </div>
       </section>
 
+      <RotatingCubeText />
+
       <RevealTextSection text="Innovation happens at the intersection of curiosity and courage" />
+
+      <WaveTextSection />
 
       <RotateSection
         title="MINDSET"
@@ -40,13 +46,6 @@ const Thoughts = () => {
       />
 
       <RevealTextSection text="Great ideas need time to grow and evolve" />
-
-      <section className="min-h-screen flex items-center justify-center">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-6xl font-bold mb-8">THINK DIFFERENTLY</h2>
-          <p className="text-xl text-muted-foreground">Challenge assumptions and explore new perspectives</p>
-        </div>
-      </section>
     </div>
   );
 };
