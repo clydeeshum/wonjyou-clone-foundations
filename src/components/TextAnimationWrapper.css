@@ -1,0 +1,9 @@
+.text-animation-wrapper {
+  display: inline-block;
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.text-animation-wrapper:hover {
+  /* Hover effects are handled by GSAP */
+}

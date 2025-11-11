@@ -1,0 +1,87 @@
+@import "compass";
+
+.animated-header-container {
+  background: #FED75A;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.animated-header-figure { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+.animated-header-svg {
+  padding: 2vw;
+  width: 96vw;
+  max-width: 1200px;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .animated-header-svg {
+    width: 98vw;
+    padding: 1vw;
+  }
+}
+
+.animated-header-svg > * { 
+  fill: #1C1C1C;
+  stroke: #1C1C1C;
+  stroke-width: 0.85px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Animation for the SVG paths */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animated-header-svg > * {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Hover tip */
+.animated-header-container:hover:after {
+  content: "Hover over letters to interact";
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  bottom: 1vh;
+  color: #1C1C1C;
+  text-align: center;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+@keyframes tip {
+  0%, 100% { opacity: 0; }
+  10%, 80% { opacity: 1; }
+}
+
+/* Animation classes for the staggered effect */
+.svg-path {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.svg-path.animate {
+  animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
