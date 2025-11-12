@@ -3,12 +3,12 @@
   --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --closed: 5rem;
   --open: 30rem;
-  --accent: #ff6b35;
+  --slider-accent: 23 100% 61%;
 }
 
 .productivity-slider-container {
-  background: #07090d;
-  color: #c5c7ce;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@
 
 .head h2 {
   font: 400 1.5rem/1.2 Inter, sans-serif;
-  color: #fff;
+  color: hsl(var(--foreground));
 }
 
 @media (min-width: 1024px) {
@@ -51,8 +51,8 @@
   height: 2.5rem;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
   font-size: 1.5rem;
   display: flex;
   align-items: center;
@@ -62,7 +62,8 @@
 }
 
 .nav-btn:hover {
-  background: var(--accent);
+  background: hsl(var(--slider-accent));
+  color: hsl(var(--background));
 }
 
 .nav-btn:disabled {
@@ -136,12 +137,12 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0;
-  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+  background: linear-gradient(transparent 40%, hsl(var(--background) / 0.95) 100%);
   z-index: 2;
 }
 
 .project-card__title {
-  color: #fff;
+  color: hsl(var(--foreground));
   font-weight: 700;
   font-size: 1.35rem;
   writing-mode: vertical-rl;
@@ -182,7 +183,7 @@
 }
 
 .project-card__desc {
-  color: #ddd;
+  color: hsl(var(--muted-foreground));
   font-size: 1rem;
   line-height: 1.4;
   max-width: 16rem;
@@ -192,15 +193,15 @@
   padding: 0.55rem 1.3rem;
   border: none;
   border-radius: 9999px;
-  background: var(--accent);
-  color: #fff;
+  background: hsl(var(--slider-accent));
+  color: hsl(var(--background));
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .project-card__btn:hover {
-  background: #ff824f;
+  background: hsl(var(--slider-accent) / 0.9);
 }
 
 .dots {
@@ -214,13 +215,13 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: hsl(var(--muted));
   cursor: pointer;
   transition: 0.3s;
 }
 
 .dot.active {
-  background: var(--accent);
+  background: hsl(var(--slider-accent));
   transform: scale(1.2);
 }
 
